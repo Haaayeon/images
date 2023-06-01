@@ -53,17 +53,36 @@
     <h1>이름을 입력해주세요 >_<</h1>
     <input type="text" id="nameInput" placeholder="닉네임도 가능!!!">
     <button onclick="submitName()">제출</button>
+ <div id="visitor-list"></div>
   </div>
   <script>
+    var visitors = [];
+
     function submitName() {
       var name = document.getElementById("nameInput").value;
       if (name) {
+        visitors.push(name);
+        if (visitors.length > 20) {
+          visitors.shift(); // 가장 오래된 이름 삭제
+        }
+        displayVisitorList();
         alert("그대의 이름: " + name);
-        window.location.href = "https://haaayeon.github.io/Music/";
-      } else {
+window.location.href = "https://haaayeon.github.io/Music/";
+    } else {
         alert("이름을 입력하세요.");
+      }
+    }
+
+    function displayVisitorList() {
+      var visitorList = document.getElementById("visitor-list");
+      visitorList.innerHTML = '';
+      for (var i = 0; i < visitors.length; i++) {
+        var listItem = document.createElement("li");
+        listItem.textContent = visitors[i];
+        visitorList.appendChild(listItem);
       }
     }
   </script>
 </body>
 </html>
+
