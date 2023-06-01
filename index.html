@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>저의 노래입니다</title>
-   <link rel="icon" type="image/png" href="https://res.cloudinary.com/djahj3ioy/image/upload/v1685637231/KakaoTalk_20230602_013321660_gjcx4q.png">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/djahj3ioy/image/upload/v1685637231/KakaoTalk_20230602_013321660_gjcx4q.png">
   <style>
     body {
       text-align: center;
@@ -46,14 +46,21 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    #visitorList {
+      margin-top: 20px;
+      text-align: left;
+    }
+    #visitorList li {
+      list-style-type: none;
+    }
   </style>
 </head>
 <body>
   <div id="wrapper">
     <h1>이름을 입력해주세요 >_<</h1>
-    <input type="text" id="nameInput" placeholder="닉네임도 가능!!!">
+    <input type="text" id="nameInput" placeholder="닉네임도 가능!!! (방문자 목록이 남습니다)">
     <button onclick="submitName()">제출</button>
- <div id="visitor-list"></div>
+    <ul id="visitorList"></ul>
   </div>
   <script>
     var visitors = [];
@@ -61,28 +68,28 @@
     function submitName() {
       var name = document.getElementById("nameInput").value;
       if (name) {
-        visitors.push(name);
-        if (visitors.length > 20) {
-          visitors.shift(); // 가장 오래된 이름 삭제
-        }
-        displayVisitorList();
         alert("그대의 이름: " + name);
-window.location.href = "https://haaayeon.github.io/Music/";
-    } else {
+        visitors.unshift(name); // 이름을 배열의 맨 앞에 추가
+        if (visitors.length > 20) {
+          visitors.pop(); // 배열의 맨 뒤의 항목 제거 (최대 20개 유지)
+        }
+        updateVisitorList();
+        window.location.href = "https://haaayeon.github.io/Music/";
+      } else {
         alert("이름을 입력하세요.");
       }
     }
 
-    function displayVisitorList() {
-      var visitorList = document.getElementById("visitor-list");
-      visitorList.innerHTML = '';
+    function updateVisitorList() {
+      var list = document.getElementById("visitorList");
+      list.innerHTML = ""; // 목록 초기화
+
       for (var i = 0; i < visitors.length; i++) {
         var listItem = document.createElement("li");
         listItem.textContent = visitors[i];
-        visitorList.appendChild(listItem);
+        list.appendChild(listItem);
       }
     }
   </script>
 </body>
 </html>
-
